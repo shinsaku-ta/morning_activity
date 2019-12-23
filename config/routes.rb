@@ -1,3 +1,13 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'sites#index'
+
+  get 'sites/terms', to: 'sites#terms'
+  get 'picture_settings/index', to: 'picture_settings#index'
+  get 'morning_actives', to: 'morning_actives#index'
+
+  #twitter認証用
+  post 'oauth/callback' => 'oauths#callback'
+  get 'oauth/callback' => 'oauths#callback'
+  get 'oauth/:provider' => 'oauths#oauth', :as => :auth_at_provider
+  post 'oauth/logout', to: 'oauths#logout'
 end

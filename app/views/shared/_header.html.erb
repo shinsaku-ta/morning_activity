@@ -1,0 +1,21 @@
+<header>
+  <nav class='navbar navbar-expand-lg navigation navbar-light bg-light'>
+    <h1 class='header-title'><%= link_to 'アサカツ', root_path, class: 'header-title-link' %></h1>
+    <ul class='navbar-nav ml-auto main-nav header-menu'>
+      <li class='nav-item header-username'>
+        <%= current_user.name %>
+      </li>
+
+      <li class='nav-item dropdown dropdown-slide header-profile'>
+        <%= link_to '#', class: 'nav-link', id: 'header-profile', data: {toggle: 'dropdown'}, aria: {haspopup: true}, aria: {expanded: false} do %>
+        <%= image_tag current_user.avatar, class: 'rounded-circle mr15', size: '40' %>
+        <% end %>
+        <div class='dropdown-menu dropdown-menu-right'>
+          <div class='dropdown-item'><%= current_user.name %></div>
+          <%= link_to '設定', root_path, class: 'dropdown-item' %>
+          <%= link_to  'ログアウト', oauth_logout_path, method: :post, class: 'dropdown-item' %>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</header>
