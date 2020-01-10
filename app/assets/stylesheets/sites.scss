@@ -1,0 +1,95 @@
+.site-wrapper {
+  background-image: image-url('top.jpg');
+  background-size: cover;
+  height: calc(100vh - 134px);
+  position: relative;
+  background-position: center;
+
+  .top-inner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-family: 'The Socialite Family';
+    font-size: 3rem;
+    @media screen and (max-width: 896px) {
+      font-size: 2rem;
+    }
+    @media screen and (max-width: 480px) {
+      font-size: 1rem;
+    }
+    @media screen and (max-height: 500px) {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.login-button {
+  display: inline-block;
+  padding: 0.3em 1em;
+  margin: 1em;
+  border: solid 2px #00acee;
+  border-radius: 20px;
+  transition: .4s;
+
+  .button-link {
+    text-decoration: none;
+    color: white;
+  }
+
+  &:hover {
+    background: #00acee;
+  }
+}
+
+.check-confirm {
+  display: inline-block;
+  padding: 20px;
+}
+
+.next-button {
+  display: inline-block;
+}
+
+.terms-message {
+  padding-top: 10px;
+}
+
+.terms-title {
+  padding-top: 20px;
+}
+
+.terms-scroll-top {
+  margin:0px;
+  padding:0px;
+}
+
+.terms-scroll-middle {
+  margin:0px;
+  padding:0px;
+  line-height:1.3;
+  width: 60%;
+  border: 1px solid black;
+    @media screen and (max-width: 896px) {
+      font-size: 2rem;
+      width: 90%;
+    }
+    @media screen and (max-width: 480px) {
+      font-size: 1rem;
+    }
+    @media screen and (max-height: 500px) {
+      font-size: 1.2rem;
+    }
+}
+
+.terms-scroll-buttom {
+  margin:0px;
+  padding:10px;
+  line-height:1.3;
+  overflow:auto;
+  text-align:left;
+  height:500px
+}
