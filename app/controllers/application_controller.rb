@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::Base
-    before_action :require_login
+  before_action :require_login
+  add_flash_types :success, :info, :warning, :danger
 
-    private
+  private
 
-    def not_authenticated
-      redirect_to root_path, notice: 'ログインしてください。'
-    end
+  def not_authenticated
+    redirect_to root_path, info: 'ログインしてください。'
+  end
 end

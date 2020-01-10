@@ -12,7 +12,7 @@
         <% end %>
         <div class='dropdown-menu dropdown-menu-right'>
           <div class='dropdown-item'><%= current_user.name %></div>
-          <%= link_to '設定', root_path, class: 'dropdown-item' %>
+          <%= link_to '設定', accounts_index_path, class: 'dropdown-item' %>
           <%= link_to 'ログアウト', oauth_logout_path, method: :post, class: 'dropdown-item' %>
         </div>
       </li>

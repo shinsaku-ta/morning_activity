@@ -3,8 +3,10 @@ require 'open-uri'
 class User < ApplicationRecord
   authenticates_with_sorcery!
   has_many :authentications, dependent: :destroy
+  has_many :morning_activity_results, dependent: :destroy
   accepts_nested_attributes_for :authentications
   has_one_attached :avatar
+  has_one_attached :post_picture
 
   def download_and_attach_avatar(filename)
     filename = filename&.gsub(/_normal/, '')

@@ -1,5 +1,40 @@
 @import 'sites';
 @import 'header';
+@import 'morning_actives';
+@import 'picture_settings';
+@import 'activity_plans';
+@import 'accounts';
+@import 'calendar';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import 'bootstrap';
+@import 'fullcalendar';
+
+//全ページ共通スタイル
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  font-family: 'The Socialite Family';
+  text-align: center;
+}
+
+.page-body {
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+}
+
+.page-headding {
+  padding: 20px 0;
+  // margin: 20px 0;
+}
+
+//フッターのスタイル
+footer {
+  margin-top: auto;
+}
