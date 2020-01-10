@@ -1,0 +1,56 @@
+.picture-wrapper {
+  font-family: 'The Socialite Family';
+}
+
+.picture-headding {
+  padding: 10px;
+  @media screen and (max-width: 896px) {
+    font-size: 2rem;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 1rem;
+  }
+  @media screen and (max-height: 500px) {
+    font-size: 1.2rem;
+  }
+}
+
+.picture-message {
+  padding: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+.picture-example {
+  display: inline-block;
+}
+
+.button_to {
+  display: inline-block;
+}
+
+.pictures-button {
+  display: inline-block;
+}
+
+#js-picture-preview {
+    background-position: left;
+    background-size: cover;
+    -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+    display: inline-block;
+    margin: 0px 20px 10px 20px;
+}
+
+.form-picture {
+  display: inline-block;
+}
+
+.pictures-example {
+  margin-bottom: 50px;
+}
+
+.picture-zone {
+  display: inline-block;
+}

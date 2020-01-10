@@ -1,0 +1,22 @@
+<%= form_with model: @user, url: picture_settings_create_path(current_user), method: :post, class: 'form-picture', local: true do |form| %>
+  <div class='picture-zone'>
+    <div>
+      自動ツイート用画像
+    </div>
+    <% if @user.post_picture.attached? %>
+      <%= image_tag @user.post_picture, size: '400x250', id: 'js-picture-preview', class: 'picture-preview' %>
+    <% else %>
+      <%= image_tag 'picture.jpg', size: '400x250', id: 'js-picture-preview', class: 'picture-preview' %>
+    <% end %>
+  </div>
+  <div class='pictures-button'>
+    <label>
+      <span class="btn btn-primary">
+        画像選択
+        <%= form.file_field :post_picture, id: 'js-post-picture', class: 'post-picture', style: 'display:none' %>
+      </span>
+    </label>
+    <%= form.submit '登録', class: 'btn btn-primary', name: 'register', data: {'disable-with': '指定した画像を登録'} %>
+    <%= form.submit 'デフォルト画像を登録', class: 'btn btn-primary', name: 'default_register', data: {'disable-with': 'デフォルト画像を登録'}, data: { confirm: 'デフォルト画像が設定されてしまします。よろしいでしょうか？' } %>
+  </div>
+<% end %>
