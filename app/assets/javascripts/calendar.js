@@ -1,7 +1,6 @@
 //カレンダー押下時処理
 $(document).ready(function(){
   user_id = JSON.parse(document.getElementById('calendar').dataset.json);
-  // cosole.log('test0');
   $('#calendar').fullCalendar({
     dayClick: function(date, jsEvent, view) {
       //クリックした日にちを保持しておく
@@ -24,12 +23,9 @@ $(document).ready(function(){
     }
   });
 
-  console.log('check');
   //カレンダー表示時に日付の色設定
   dateColor();
 
-  //今日の日付を確認し、12時以前かつstate0の場合のみ活性化
-  // buttonActivity();
   //前←ボタンを押した時のイベント
   $('.fc-prev-button').click(function(){
     //カレンダーの日付の色設定
@@ -62,13 +58,6 @@ function dateColor(){
   YMD_str = calendarStrToYMD(calendar_year_month);
   changeDateColor(user_id, YMD_str);
 }
-
-// function buttonActivity(){
-//   var now_datetime = new Date();
-//   var now_hour = now_datetime.getHours();
-//   var today_YMD = changeDateToYMD(now_datetime);
-//   console.log($(`.fc-bg td[data-date = '${today_YMD}']`).style.background);
-// }
 
 //Date型の月加算・減算
 //使い方、dateに標準の時間を指定、monthsにプラスする月数を指定
@@ -166,7 +155,6 @@ function changeDateColor(user_id, YMD_str){
   })
   .done(function (data) {
     for ( var i = 0; i < data[0].month.length; i++ ){
-      // var date = new Date(data[i].execution_at);
       var date = new Date(data[0].month[i].execution_at);
       var yyyy_MM_dd = changeDateToYMD(date);
       if(data[0].month[i].state == 'not_implemented'){

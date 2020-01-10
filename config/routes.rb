@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'sites/terms', to: 'sites#terms'
   get 'picture_settings/index', to: 'picture_settings#index'
   post 'picture_settings/create', to: 'picture_settings#create'
+
   get 'accounts/index', to: 'accounts#index'
   get 'accounts/delete_confirm', to: 'accounts#delete_confirm'
   get 'accounts/delete_completed', to: 'accounts#delete_completed'

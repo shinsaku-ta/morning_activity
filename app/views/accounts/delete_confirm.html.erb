@@ -1,6 +1,7 @@
 <div class='account-delete-confirm-wrapper'>
   <div class='container'>
     <h1 class='page-headding'>
+      アカウント削除
     </h1>
     <div class='page-body'>
       <div class='delete-confirm-text'>
@@ -8,7 +9,7 @@
         アプリをご利用できなくなります。<br>
         削除してよろしいでしょうか？<br>
       </div>
-      <div class='delete-confirm-button'>
+      <div class='delete-confirm-buttons'>
         <%= link_to 'キャンセル', accounts_index_path, class: 'btn btn-primary cancel-button' %>
         <%= link_to '削除する', accounts_destroy_path, method: :post, class: 'btn btn-primary delete-button' %>
       </div>

@@ -21,9 +21,13 @@
   }
 }
 
-//delete_confirm画面のスタイル
+//delete_confirm画面(アカウント削除確認)のスタイル
 .delete-confirm-text {
+
+  //テキストの上と下(ボタン)の間隔調整
   padding: 20px;
+
+  //フォントサイズ(レスポンシブ対応)
   font-size: 2rem;
   @media screen and (max-width: 800px) {
     font-size: 1.4rem;
@@ -33,6 +37,7 @@
   }
 }
 
+//ボタンとボタンの間隔調整
 .delete-button {
   margin: 5px;
 }
@@ -41,12 +46,11 @@
   margin: 5px;
 }
 
-//delete-completed画面のスタイル
+//delete-completed画面(アカウント削除完了)のスタイル
 .delete-completed-message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  padding-top: 50px;
+
+  //フォントサイズ(レスポンシブ対応)
   font-size: 2rem;
   @media screen and (max-width: 800px) {
     font-size: 1.4rem;

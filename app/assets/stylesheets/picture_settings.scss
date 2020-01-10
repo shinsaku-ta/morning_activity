@@ -1,41 +1,5 @@
-.picture-wrapper {
-  font-family: 'The Socialite Family';
-}
-
-.picture-headding {
-  padding: 10px;
-  @media screen and (max-width: 896px) {
-    font-size: 2rem;
-  }
-  @media screen and (max-width: 480px) {
-    font-size: 1rem;
-  }
-  @media screen and (max-height: 500px) {
-    font-size: 1.2rem;
-  }
-}
-
-.picture-message {
-  padding: 10px;
-}
-
-ul {
-  list-style: none;
-}
-
-.picture-example {
-  display: inline-block;
-}
-
-.button_to {
-  display: inline-block;
-}
-
-.pictures-button {
-  display: inline-block;
-}
-
-#js-picture-preview {
+//プレビューの配置、枠設定
+.picture-preview {
     background-position: left;
     background-size: cover;
     -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
@@ -43,14 +7,27 @@ ul {
     margin: 0px 20px 10px 20px;
 }
 
-.form-picture {
+//配置調整のためinline-block、padding、margin設定
+.picture-example, .button_to, .picture-setting-buttons, .form-picture, .picture-zone {
   display: inline-block;
+}
+
+.picture-message {
+  padding: 10px;
+  font-size: 1rem;
+  @media screen and (max-width: 500px) {
+    font-size: 0.6rem;
+  }
+  @media screen and (max-height: 500px) {
+    font-size: 0.6rem;
+  }
 }
 
 .pictures-example {
   margin-bottom: 50px;
 }
 
-.picture-zone {
-  display: inline-block;
+//画像設定ボタンのURLを非表示
+.post-picture {
+  display: none;
 }

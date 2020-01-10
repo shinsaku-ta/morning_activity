@@ -22,16 +22,18 @@
   text-align: center;
 }
 
-.page-body {
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
-}
-
 .page-headding {
   padding: 20px 0;
-  // margin: 20px 0;
+  @media screen and (max-width: 800px) {
+    font-size: 2rem;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 1rem;
+  }
+}
+
+ul {
+  list-style: none;
 }
 
 //フッターのスタイル
