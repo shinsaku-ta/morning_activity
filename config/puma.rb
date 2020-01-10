@@ -13,7 +13,6 @@ threads threads_count, threads_count
 
 # Specifies the `environment` that Puma will run in.
 #
-# environment ENV.fetch("RAILS_ENV") { "development" }
 
 if ENV.fetch('RAILS_ENV') { 'development' } == 'development'
   ssl_bind '0.0.0.0', '3000', cert: 'config/certs/localhost.pem', key: 'config/certs/localhost-key.pem'

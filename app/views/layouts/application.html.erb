@@ -10,7 +10,7 @@
 
   <body>
     <div id="wrapper">
-      <% if current_user && !current_page?(sites_terms_path) %>
+      <% if logged_in? && !current_page?(sites_terms_path) %>
         <%= render 'shared/header' %>
       <% else %>
         <%= render 'shared/before_login_header' %>
