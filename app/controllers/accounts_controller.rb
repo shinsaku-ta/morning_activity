@@ -2,9 +2,7 @@ class AccountsController < ApplicationController
   # アカウントを削除した場合に削除完了ページに飛べないため追加
   skip_before_action :require_login, raise: false, only: %i[delete_completed]
 
-  def index
-    @user = User.find(current_user.id)
-  end
+  def index; end
 
   def destroy
     @user = User.find(current_user.id)
