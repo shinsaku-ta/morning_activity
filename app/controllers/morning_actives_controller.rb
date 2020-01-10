@@ -3,12 +3,13 @@ class MorningActivesController < ApplicationController
 
   def show
     if params[:month]
-      range = params[:month].to_date.in_time_zone.all_month
+      range = params[:month].to_date.all_month
     else
-      range = Date.today.in_time_zone.all_month
+      range = Date.current.all_month
     end
     @month_results = current_user.morning_activity_results.where(execution_at: range)
     @day_results = check_now_state
+
     respond_to do |format|
       format.html
       format.json { render json: [month: @month_results, day: @day_results] }
@@ -16,8 +17,9 @@ class MorningActivesController < ApplicationController
   end
 
   def create
-    @morning_activity_result = current_user.morning_activity_results.build(user_id: current_user.id, state: :not_implemented, execution_at: params[:click_day].to_date)
+    @morning_activity_result = current_user.morning_activity_results.build(execution_at: params[:click_day].to_date, state: :not_implemented)
     @morning_activity_result.save
+
     respond_to do |format|
       format.html
       format.json { render json: current_user }
@@ -25,8 +27,7 @@ class MorningActivesController < ApplicationController
   end
 
   def destroy
-    range = params[:click_day].to_date.beginning_of_day..params[:click_day].to_date.end_of_day
-    @morning_activity_result = current_user.morning_activity_results.find_by!(execution_at: range, state: :not_implemented)
+    @morning_activity_result = current_user.morning_activity_results.find_by!(execution_at: params[:click_day].to_date, state: :not_implemented)
     if @morning_activity_result
       @morning_activity_result.destroy
     end
@@ -39,15 +40,13 @@ class MorningActivesController < ApplicationController
 
   # 本日のstateを確認(ボタンの表示・非表示に使用)
   def check_now_state
-    now_range = Date.today.beginning_of_day..Date.today.end_of_day
-    @day_results = current_user.morning_activity_results.where(execution_at: now_range, state: :not_implemented)
+    @day_results = current_user.morning_activity_results.where(execution_at: Date.current, state: :not_implemented)
     return @day_results
   end
 
-  # カレンダーの表示年月で、登録されているデータ一覧取得
+  # クリックした日付が登録されているか判定
   def check_date
-    range = params[:click_day].to_date.beginning_of_day..params[:click_day].to_date.end_of_day
-    @morning_activity_results = current_user.morning_activity_results.where(execution_at: range)
+    @morning_activity_results = current_user.morning_activity_results.where(execution_at: params[:click_day].to_date)
     respond_to do |format|
       format.html { redirect_to root_path }
       format.json { render json: @morning_activity_results }
