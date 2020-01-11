@@ -71,7 +71,6 @@ function month_start_date(){
   return start_str
 }
 
-
 //カレンダー年月から月初の日時を取得(yyyy_MM_dd形式)
 function month_end_date(){
   var start_str = month_start_date();
@@ -138,6 +137,17 @@ function createOrDestroyDate(user_id, date, $click_object, today_YMD){
   })
   .done(function (data) {
       if(data.length){
+        //クリックした日付を削除
+        ajaxDeleteDate(date, user_id, $click_object);
+      }else{
+        //クリックした日付を登録
+        ajaxCreateDate(date, $click_object);
+      }
+  })
+}
+
+//ajaxよりDBにアクセスし日付の削除を行う
+function ajaxDeleteDate(date, user_id, $click_object){
         $.ajax({
           url: '/morning_actives/'+user_id,
           type: 'POST',
@@ -148,28 +158,28 @@ function createOrDestroyDate(user_id, date, $click_object, today_YMD){
           dataType: 'json'
         })
         .done(function (data) {
-          if(date.format() == today_YMD){
+          if(date.format() == now_date()){
             $click_object.css('background-color', '#fcf8e3');
           }else{
             $click_object.css('background-color', 'transparent');
           }
         })
-      }else{
-        $.ajax({
-          url: '/morning_actives/',
-          type: 'POST',
-          data: {
-            click_day : date.format()
-          },
-          dataType: 'json'
-        })
-        .done(function (data) {
-          $click_object.css('background-color', 'rgb(102, 204, 102)');
-        })
-      }
-  })
 }
 
+//ajaxよりDBにアクセスし日付の登録を行う
+function ajaxCreateDate(date, $click_object){
+  $.ajax({
+    url: '/morning_actives/',
+    type: 'POST',
+    data: {
+      click_day : date.format()
+    },
+    dataType: 'json'
+  })
+  .done(function (data) {
+    $click_object.css('background-color', 'rgb(102, 204, 102)');
+  })
+}
 
 //カレンダーに登録されている日付の色付け処理
 //朝活成功：水色
