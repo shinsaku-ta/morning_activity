@@ -2,23 +2,13 @@
 $(document).ready(function(){
   user_id = JSON.parse(document.getElementById('calendar').dataset.json);
   $('#calendar').fullCalendar({
-    dayClick: function(date, jsEvent, view) {
+    dayClick: function(selectableDate, jsEvent, view) {
       //クリックした日にちを保持しておく
       var $click_object = $(this);
 
-      var now_datetime = new Date();
-      var now_hour = now_datetime.getHours();
-      var today_YMD = changeDateToYMD(now_datetime);
-
-      var calendar_year_month = $(".fc-left h2").text();
-      var start_str = calendarStrToYMD(calendar_year_month);
-      var start_date = new Date(start_str);
-      var add_start_date = addMonths(start_date, +1);
-      var end_date = new Date(add_start_date.getFullYear(), add_start_date.getMonth(), add_start_date.getDate() - 1);
-      var end_str = changeDateToYMD(end_date);
       //現在・未来時処理
-      if (clickPossibleBoolean(date, now_datetime, today_YMD, now_hour, start_str, end_str)){
-        createOrDestroyDate(user_id, date, $click_object, today_YMD);
+      if (clickableDate(selectableDate)){
+        createOrDestroyDate(user_id, selectableDate, $click_object, now_date());
       }
     }
   });
@@ -40,16 +30,56 @@ $(document).ready(function(){
 });
 
 //カレンダーの日付をクリックできるか判定
-//下記の場合クリックが可能
-//1.日付が未来である場合
-//2.日付が現在でかつ12時以前である場合
-//3. 1もしくは2と合わせて、表示年月と同じ日付の場合
-//例）2020年 1月であれば、1月の1日〜31日までがクリック可能
-function clickPossibleBoolean(date, now_datetime, today_YMD, now_hour, start_str, end_str){
-  if ((date > now_datetime || (date.format() == today_YMD && now_hour <= 11)) && (start_str <= date.format() && end_str >= date.format())){
-    return true
+function clickableDate(date){
+
+  //表示年月と同じ日付の場合
+  //例）2020年 1月であれば、1月の1日〜31日までがクリック可能
+  if(month_start_date() <= date.format() && month_end_date() >= date.format()){
+    //日付が未来である場合
+    if(date > now_datetime()){
+      return true
+    }
+    //日付が現在でかつ12時以前である場合
+    if(date.format() == now_date() && now_hour() <= 11){
+      return true
+    }
   }
   return false
+}
+
+//現在の日時datetime形式で取得
+function now_datetime(){
+  var now_datetime = new Date();
+  return now_datetime
+}
+//現在の日付date形式で取得
+function now_date(){
+  var now_datetime = new Date();
+  return changeDateToYMD(now_datetime);
+}
+
+//現在の時間のみを取得
+function now_hour(){
+  var now_datetime = new Date();
+  return now_datetime.getHours();
+}
+
+//カレンダー年月から月初の日時を取得(yyyy_MM_dd形式)
+function month_start_date(){
+  var calendar_year_month = $(".fc-left h2").text();
+  var start_str = calendarStrToYMD(calendar_year_month);
+  return start_str
+}
+
+
+//カレンダー年月から月初の日時を取得(yyyy_MM_dd形式)
+function month_end_date(){
+  var start_str = month_start_date();
+  var start_date = new Date(start_str);
+  var add_start_date = addMonths(start_date, +1);
+  var end_date = new Date(add_start_date.getFullYear(), add_start_date.getMonth(), add_start_date.getDate() - 1);
+  var end_str = changeDateToYMD(end_date);
+  return end_str;
 }
 
 //カレンダーの表示年月の範囲で、登録されている日付に色をつける
@@ -139,6 +169,7 @@ function createOrDestroyDate(user_id, date, $click_object, today_YMD){
       }
   })
 }
+
 
 //カレンダーに登録されている日付の色付け処理
 //朝活成功：水色
