@@ -9,7 +9,7 @@ class OauthsController < ApplicationController
     provider = params[:provider]
 
     if @user = login_from(provider)
-      redirect_to morning_active_path(current_user), success: "#{provider.titleize}でログインしました。"
+      redirect_to morning_activity_results_path, success: "#{provider.titleize}でログインしました。"
     else
       begin
         #twitter情報取得
@@ -21,7 +21,7 @@ class OauthsController < ApplicationController
 
         reset_session
         auto_login(@user)
-        redirect_to sites_terms_path
+        redirect_to site_term_path
       rescue
         redirect_to root_path, danger: "#{provider.titleize}でログイン出来ませんでした。"
       end
