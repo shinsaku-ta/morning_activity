@@ -7,7 +7,7 @@
       次に朝活の内容を投稿してみましょう！<br>
     </div>
     <div class='post-select-button'>
-      <%= link_to '投稿をスキップする', morning_active_path(current_user), class: 'btn btn-primary post-skip-button' %>
+      <%= link_to '投稿をスキップする', morning_activity_results_path, class: 'btn btn-primary post-skip-button' %>
       <%= link_to '投稿する', "https://twitter.com/share?text=今から朝活で下記の内容を行います。%0a・%0a&url=https://www.url.url/&hashtags=朝活,アサカツ", onClick: "window.open(encodeURI(decodeURI(this.href)), 'tweetwindow', 'width=650, height=470, personalbar=0, toolbar=0, scrollbars=1, sizable=1'); return false;", rel: 'nofollow', class: 'btn btn-primary twitter-link' %>
       </div>
     </div>
