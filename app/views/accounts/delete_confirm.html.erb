@@ -10,8 +10,8 @@
         削除してよろしいでしょうか？<br>
       </div>
       <div class='delete-confirm-buttons'>
-        <%= link_to 'キャンセル', accounts_index_path, class: 'btn btn-primary cancel-button' %>
-        <%= link_to '削除する', accounts_destroy_path, method: :post, class: 'btn btn-primary delete-button' %>
+        <%= link_to 'キャンセル', account_path, class: 'btn btn-primary cancel-button' %>
+        <%= link_to '削除する', account_path, method: :delete, class: 'btn btn-primary delete-button' %>
       </div>
     </div>
   </div>
