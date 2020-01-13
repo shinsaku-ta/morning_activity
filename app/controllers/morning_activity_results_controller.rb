@@ -38,7 +38,7 @@ class MorningActivityResultsController < ApplicationController
 
   # クリックした日付が登録されているか判定
   def show
-    @morning_activity_result = current_user.morning_activity_results.where(execution_at: params[:id].to_date.all_day)
+    @morning_activity_result = current_user.morning_activity_results.find_by(execution_at: params[:id].to_date.all_day)
     respond_to do |format|
       format.html { redirect_to root_path }
       format.json { render json: @morning_activity_result }

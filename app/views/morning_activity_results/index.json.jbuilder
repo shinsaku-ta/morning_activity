@@ -1,1 +1,1 @@
-json.month @month_results
+json @month_results

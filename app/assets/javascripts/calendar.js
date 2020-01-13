@@ -1,5 +1,5 @@
 //カレンダー押下時処理
-$(document).ready(function(){
+$(document).ready(function() {
   $('#calendar').fullCalendar({
     dayClick: function(selectableDate, jsEvent, view) {
       //クリックした日にちを保持しておく
@@ -12,22 +12,20 @@ $(document).ready(function(){
     }
   });
 
-  //カレンダー表示時に日付の色設定
+  //カレンダーの色設定
   dateColor();
-
-  //スタートボタンの活性・非活性
   changeButtonDisabled();
 
   //前←ボタンを押した時のイベント
   $('.fc-prev-button').click(function() {
-    //カレンダーの日付の色設定
+    //カレンダーの色設定
     dateColor();
     changeButtonDisabled();
   });
 
   //次→ボタンを押した時のイベント
   $('.fc-next-button').click(function() {
-    //カレンダーの日付の色設定
+    //カレンダーの色設定
     dateColor();
     changeButtonDisabled();
   });
@@ -35,15 +33,14 @@ $(document).ready(function(){
 
 //カレンダーの日付をクリックできるか判定
 function clickableDate(selectableDate) {
-  //表示年月と同じ日付の場合
+  //カレンダーの表示年月の範囲の場合
   //例）2020年 1月であれば、1月の1日〜31日までがクリック可能
   if(month_start_date() <= selectableDate.format() && month_end_date() >= selectableDate.format()) {
     //日付が未来である場合
     if(selectableDate > now_datetime()) {
-      console.log('selectableDate'+selectableDate);
-      console.log('selectableDate.format()'+selectableDate.format());
       return true
     }
+
     //日付が現在でかつ12時以前である場合
     if(selectableDate.format() == now_date() && now_hour() < 12) {
       return true
@@ -52,10 +49,10 @@ function clickableDate(selectableDate) {
   return false
 }
 
+
 //現在の日時datetime形式で取得
 function now_datetime() {
   var now_datetime = new Date();
-  console.log('now_datetime'+now_datetime)
   return now_datetime
 }
 
@@ -130,9 +127,7 @@ function calendarStrToYMD(calendar_year_month) {
   return year + '-' + month + '-01';
 }
 
-//カレンダーのクリックした日付がDBに登録しているか確認する。
-//登録されていればDestroy処理、登録されていなければCreate処理を行う
-//時間があれば、Destroy処理の関数とCreate処理の関数を作る
+//日付が登録されていればDestroy処理、登録されていなければCreate処理を行う
 function createOrDestroyDate(date, $click_object) {
   $.ajax({
     url: '/morning_activity_results/'+date.format(),
@@ -140,33 +135,31 @@ function createOrDestroyDate(date, $click_object) {
     dataType: 'json'
   })
   .done(function (data) {
-      if(data.length) {
-        //クリックした日付を削除
-        ajaxDeleteDate(date, $click_object);
-      } else {
-        //クリックした日付を登録
-        ajaxCreateDate(date, $click_object);
-      }
+    if(data == null){
+      ajaxCreateDate(date, $click_object);
+    }else{
+      ajaxDeleteDate(date, $click_object);
+    }
   })
 }
 
 //ajaxよりDBにアクセスし日付の削除を行う
 function ajaxDeleteDate(date, $click_object) {
-        $.ajax({
-          url: '/morning_activity_results/'+date.format(),
-          type: 'POST',
-          data: {
-            '_method': 'DELETE'
-          },
-          dataType: 'json'
-        })
-        .done(function (data) {
-          if(date.format() == now_date()) {
-            $click_object.css('background-color', '#fcf8e3');
-          } else {
-            $click_object.css('background-color', 'transparent');
-          }
-        })
+  $.ajax({
+    url: '/morning_activity_results/'+date.format(),
+    type: 'POST',
+    data: {
+      '_method': 'DELETE'
+    },
+    dataType: 'json'
+  })
+  .done(function (data) {
+    if(date.format() == now_date()) {
+      changeNowColor($click_object);
+    } else {
+      $click_object.css('background-color', 'transparent');
+    }
+  })
 }
 
 //ajaxよりDBにアクセスし日付の登録を行う
@@ -199,7 +192,6 @@ function changeDateColor(YMD_str) {
   })
   .done(function (data) {
     for ( var i = 0; i < data.length; i++ ) {
-      console.log(data[i].id);
       var date = new Date(data[i].execution_at);
       var yyyy_MM_dd = changeDateToYMD(date);
       if(data[i].state == 'not_implemented') {
@@ -213,19 +205,34 @@ function changeDateColor(YMD_str) {
   })
 }
 
-//朝活スタートボタンの活性・非活性
-function changeButtonDisabled() {
-  $.ajax({
+//今日のデータを取得
+function ajaxTodayDate() {
+  return result = $.ajax({
     url: '/today_morning_activity_result',
     type: 'GET',
     dataType: 'json'
   })
-  .done(function (data) {
-    //ボタン活性・非活性設定
-    if(data.length > 0) {
-      $("#js-activity-button").prop("disabled", false);
-    } else {
-      $("#js-activity-button").prop("disabled", true);
+}
+
+//朝活スタートボタンの活性・非活性
+function changeButtonDisabled() {
+  $('#js-activity-button').prop('disabled', true);
+  ajaxTodayDate().done(function(data){
+    if(data == null){
+      return;
     }
-  })
+
+    if(data.state == 'not_implemented'){
+      $('#js-activity-button').prop('disabled', false);
+    }
+  });
+}
+
+//本日Delete例外処理対応
+function changeNowColor($click_object){
+  ajaxTodayDate().done(function(data){
+    if(data == null){
+      $click_object.css('background-color', 'rgb(252, 248, 227)');
+    }
+  });
 }

@@ -1,1 +1,1 @@
-json.day @day_results
+json @day_result
