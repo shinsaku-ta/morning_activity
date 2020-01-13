@@ -12,8 +12,8 @@
         <% end %>
         <div class='dropdown-menu dropdown-menu-right'>
           <div class='dropdown-item'><%= current_user.name %></div>
-          <%= link_to '朝活', morning_active_path(current_user), class: 'dropdown-item' %>
-          <%= link_to '設定', accounts_index_path, class: 'dropdown-item' %>
+          <%= link_to '朝活', morning_activity_results_path(month: Date.current), class: 'dropdown-item' %>
+          <%= link_to '設定', account_path, class: 'dropdown-item' %>
           <%= link_to 'ログアウト', oauth_logout_path, method: :post, class: 'dropdown-item' %>
         </div>
       </li>

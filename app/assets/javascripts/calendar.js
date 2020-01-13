@@ -1,62 +1,95 @@
 //カレンダー押下時処理
-$(document).ready(function(){
-  user_id = JSON.parse(document.getElementById('calendar').dataset.json);
+$(document).ready(function() {
   $('#calendar').fullCalendar({
-    dayClick: function(date, jsEvent, view) {
+    dayClick: function(selectableDate, jsEvent, view) {
       //クリックした日にちを保持しておく
       var $click_object = $(this);
 
-      var now_datetime = new Date();
-      var now_hour = now_datetime.getHours();
-      var today_YMD = changeDateToYMD(now_datetime);
-
-      var calendar_year_month = $(".fc-left h2").text();
-      var start_str = calendarStrToYMD(calendar_year_month);
-      var start_date = new Date(start_str);
-      var add_start_date = addMonths(start_date, +1);
-      var end_date = new Date(add_start_date.getFullYear(), add_start_date.getMonth(), add_start_date.getDate() - 1);
-      var end_str = changeDateToYMD(end_date);
       //現在・未来時処理
-      if (clickPossibleBoolean(date, now_datetime, today_YMD, now_hour, start_str, end_str)){
-        createOrDestroyDate(user_id, date, $click_object, today_YMD);
+      if (clickableDate(selectableDate)) {
+        createOrDestroyDate(selectableDate, $click_object);
       }
     }
   });
 
-  //カレンダー表示時に日付の色設定
+  //カレンダーの色設定
   dateColor();
+  changeButtonDisabled();
 
   //前←ボタンを押した時のイベント
-  $('.fc-prev-button').click(function(){
-    //カレンダーの日付の色設定
+  $('.fc-prev-button').click(function() {
+    //カレンダーの色設定
     dateColor();
+    changeButtonDisabled();
   });
 
   //次→ボタンを押した時のイベント
-  $('.fc-next-button').click(function(){
-    //カレンダーの日付の色設定
+  $('.fc-next-button').click(function() {
+    //カレンダーの色設定
     dateColor();
+    changeButtonDisabled();
   });
 });
 
 //カレンダーの日付をクリックできるか判定
-//下記の場合クリックが可能
-//1.日付が未来である場合
-//2.日付が現在でかつ12時以前である場合
-//3. 1もしくは2と合わせて、表示年月と同じ日付の場合
-//例）2020年 1月であれば、1月の1日〜31日までがクリック可能
-function clickPossibleBoolean(date, now_datetime, today_YMD, now_hour, start_str, end_str){
-  if ((date > now_datetime || (date.format() == today_YMD && now_hour <= 11)) && (start_str <= date.format() && end_str >= date.format())){
-    return true
+function clickableDate(selectableDate) {
+  //カレンダーの表示年月の範囲の場合
+  //例）2020年 1月であれば、1月の1日〜31日までがクリック可能
+  if(month_start_date() <= selectableDate.format() && month_end_date() >= selectableDate.format()) {
+    //日付が未来である場合
+    if(selectableDate > now_datetime()) {
+      return true
+    }
+
+    //日付が現在でかつ12時以前である場合
+    if(selectableDate.format() == now_date() && now_hour() < 12) {
+      return true
+    }
   }
   return false
 }
 
+
+//現在の日時datetime形式で取得
+function now_datetime() {
+  var now_datetime = new Date();
+  return now_datetime
+}
+
+//現在の日付date形式で取得
+function now_date() {
+  var now_datetime = new Date();
+  return changeDateToYMD(now_datetime);
+}
+
+//現在の時間のみを取得
+function now_hour() {
+  var now_datetime = new Date();
+  return now_datetime.getHours();
+}
+
+//カレンダー年月から月初の日時を取得(yyyy_MM_dd形式)
+function month_start_date() {
+  var calendar_year_month = $(".fc-left h2").text();
+  var start_str = calendarStrToYMD(calendar_year_month);
+  return start_str
+}
+
+//カレンダー年月から月終の日時を取得(yyyy_MM_dd形式)
+function month_end_date() {
+  var start_str = month_start_date();
+  var start_date = new Date(start_str);
+  var add_start_date = addMonths(start_date, +1);
+  var end_date = new Date(add_start_date.getFullYear(), add_start_date.getMonth(), add_start_date.getDate() - 1);
+  var end_str = changeDateToYMD(end_date);
+  return end_str;
+}
+
 //カレンダーの表示年月の範囲で、登録されている日付に色をつける
-function dateColor(){
+function dateColor() {
   var calendar_year_month = $(".fc-left h2").text();
   YMD_str = calendarStrToYMD(calendar_year_month);
-  changeDateColor(user_id, YMD_str);
+  changeDateColor(YMD_str);
 }
 
 //Date型の月加算・減算
@@ -78,7 +111,7 @@ var toDoubleDigits = function(num) {
 };
 
 //Datetime型の日付から、String型の年月日を返す
-function changeDateToYMD(datetime){
+function changeDateToYMD(datetime) {
   var day = toDoubleDigits(datetime.getDate());
   var month = toDoubleDigits(datetime.getMonth() + 1);
   var year = datetime.getFullYear();
@@ -86,7 +119,7 @@ function changeDateToYMD(datetime){
 }
 
 //カレンダーの年月(文字列)から、年月+日(01)(文字列)を返す
-function calendarStrToYMD(calendar_year_month){
+function calendarStrToYMD(calendar_year_month) {
   var year_position = calendar_year_month.indexOf('年');
   var month_position = calendar_year_month.indexOf('月');
   var year = calendar_year_month.slice(0, year_position);
@@ -94,49 +127,53 @@ function calendarStrToYMD(calendar_year_month){
   return year + '-' + month + '-01';
 }
 
-//カレンダーのクリックした日付がDBに登録しているか確認する。
-//登録されていればDestroy処理、登録されていなければCreate処理を行う
-//時間があれば、Destroy処理の関数とCreate処理の関数を作る
-function createOrDestroyDate(user_id, date, $click_object, today_YMD){
+//日付が登録されていればDestroy処理、登録されていなければCreate処理を行う
+function createOrDestroyDate(date, $click_object) {
   $.ajax({
-    url: '/check_date',
+    url: '/morning_activity_results/'+date.format(),
     type: 'GET',
+    dataType: 'json'
+  })
+  .done(function (data) {
+    if(data == null){
+      ajaxCreateDate(date, $click_object);
+    }else{
+      ajaxDeleteDate(date, $click_object);
+    }
+  })
+}
+
+//ajaxよりDBにアクセスし日付の削除を行う
+function ajaxDeleteDate(date, $click_object) {
+  $.ajax({
+    url: '/morning_activity_results/'+date.format(),
+    type: 'POST',
+    data: {
+      '_method': 'DELETE'
+    },
+    dataType: 'json'
+  })
+  .done(function (data) {
+    if(date.format() == now_date()) {
+      changeNowColor($click_object);
+    } else {
+      $click_object.css('background-color', 'transparent');
+    }
+  })
+}
+
+//ajaxよりDBにアクセスし日付の登録を行う
+function ajaxCreateDate(date, $click_object) {
+  $.ajax({
+    url: '/morning_activity_results/',
+    type: 'POST',
     data: {
       click_day : date.format()
     },
     dataType: 'json'
   })
   .done(function (data) {
-      if(data.length){
-        $.ajax({
-          url: '/morning_actives/'+user_id,
-          type: 'POST',
-          data: {
-            click_day : date.format(),
-            '_method': 'DELETE'
-          },
-          dataType: 'json'
-        })
-        .done(function (data) {
-          if(date.format() == today_YMD){
-            $click_object.css('background-color', '#fcf8e3');
-          }else{
-            $click_object.css('background-color', 'transparent');
-          }
-        })
-      }else{
-        $.ajax({
-          url: '/morning_actives/',
-          type: 'POST',
-          data: {
-            click_day : date.format()
-          },
-          dataType: 'json'
-        })
-        .done(function (data) {
-          $click_object.css('background-color', 'rgb(102, 204, 102)');
-        })
-      }
+    $click_object.css('background-color', 'rgb(102, 204, 102)');
   })
 }
 
@@ -144,9 +181,9 @@ function createOrDestroyDate(user_id, date, $click_object, today_YMD){
 //朝活成功：水色
 //朝活失敗：赤色
 //朝活予定日：緑色
-function changeDateColor(user_id, YMD_str){
+function changeDateColor(YMD_str) {
   $.ajax({
-    url: '/morning_actives/'+user_id,
+    url: '/morning_activity_results/',
     type: 'GET',
     data: {
       month : YMD_str
@@ -154,23 +191,48 @@ function changeDateColor(user_id, YMD_str){
     dataType: 'json'
   })
   .done(function (data) {
-    for ( var i = 0; i < data[0].month.length; i++ ){
-      var date = new Date(data[0].month[i].execution_at);
+    for ( var i = 0; i < data.length; i++ ) {
+      var date = new Date(data[i].execution_at);
       var yyyy_MM_dd = changeDateToYMD(date);
-      if(data[0].month[i].state == 'not_implemented'){
+      if(data[i].state == 'not_implemented') {
         $(`.fc-bg td[data-date = '${yyyy_MM_dd}']`).css('background-color', 'rgb(102, 204, 102)');
-      }else if(data[0].month[i].state == 'success'){
+      } else if(data[i].state == 'success') {
         $(`.fc-bg td[data-date = '${yyyy_MM_dd}']`).css('background-color', 'rgb(0, 172, 238)');
-      }else{
+      } else {
         $(`.fc-bg td[data-date = '${yyyy_MM_dd}']`).css('background-color', 'rgb(255, 102, 102)');
       }
     }
-
-    //ボタン活性・非活性設定
-    if(data[0].day.length > 0){
-      $("#js-activity-button").prop("disabled", false);
-    }else{
-      $("#js-activity-button").prop("disabled", true);
-    }
   })
+}
+
+//今日のデータを取得
+function ajaxTodayDate() {
+  return result = $.ajax({
+    url: '/today_morning_activity_result',
+    type: 'GET',
+    dataType: 'json'
+  })
+}
+
+//朝活スタートボタンの活性・非活性
+function changeButtonDisabled() {
+  $('#js-activity-button').prop('disabled', true);
+  ajaxTodayDate().done(function(data){
+    if(data == null){
+      return;
+    }
+
+    if(data.state == 'not_implemented'){
+      $('#js-activity-button').prop('disabled', false);
+    }
+  });
+}
+
+//本日Delete例外処理対応
+function changeNowColor($click_object){
+  ajaxTodayDate().done(function(data){
+    if(data == null){
+      $click_object.css('background-color', 'rgb(252, 248, 227)');
+    }
+  });
 }

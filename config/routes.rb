@@ -1,19 +1,15 @@
 Rails.application.routes.draw do
   root 'sites#index'
 
-  get 'sites/terms', to: 'sites#terms'
-  get 'picture_settings/index', to: 'picture_settings#index'
-  post 'picture_settings/create', to: 'picture_settings#create'
+  get 'site/term', to: 'sites#term'
+  resource :post_picture, only: %i[show create destroy]
 
-  get 'accounts/index', to: 'accounts#index'
-  get 'accounts/delete_confirm', to: 'accounts#delete_confirm'
-  get 'accounts/delete_completed', to: 'accounts#delete_completed'
-  post 'accounts/destroy', to: 'accounts#destroy'
+  resource :account, only: %i[show destroy]
+  get 'account/delete_confirm', to: 'accounts#delete_confirm'
+  get 'account/delete_completed', to: 'accounts#delete_completed'
 
-  resources :morning_actives, only: %i[show create destroy]
-  get 'check_date', to: 'morning_actives#check_date'
-  get 'check_now_state', to: 'morning_actives#check_now_state'
-  resources :activity_plans, only: %i[new]
+  resources :morning_activity_results, only: %i[index show create destroy]
+  resource :today_morning_activity_result, only: %i[new show update]
 
   #twitter認証用
   post 'oauth/callback', to: 'oauths#callback'

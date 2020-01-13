@@ -7,5 +7,5 @@
 //= require popper
 //= require bootstrap
 //= require terms.js
-//= require picture_settings.js
+//= require post_pictures.js
 //= require calendar.js
