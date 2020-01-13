@@ -9,7 +9,7 @@ class OauthsController < ApplicationController
     provider = params[:provider]
 
     if @user = login_from(provider)
-      redirect_to morning_activity_results_path, success: "#{provider.titleize}でログインしました。"
+      redirect_to morning_activity_results_path(month: Date.current), success: "#{provider.titleize}でログインしました。"
     else
       begin
         #twitter情報取得

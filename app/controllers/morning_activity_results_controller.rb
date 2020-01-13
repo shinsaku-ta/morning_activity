@@ -2,11 +2,7 @@ class MorningActivityResultsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    if params[:month]
-      range = params[:month].to_date.all_month
-    else
-      range = Date.current.all_month
-    end
+    range = params[:month].to_date.all_month
     @month_results = current_user.morning_activity_results.where(execution_at: range)
     respond_to do |format|
       format.html
