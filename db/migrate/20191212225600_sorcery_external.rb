@@ -4,6 +4,7 @@ class SorceryExternal < ActiveRecord::Migration[5.2]
       t.integer :user_id, null: false
       t.string :provider, :uid, null: false
       t.string :access_token, null: false
+      t.string :access_token_secret, null: false
 
       t.timestamps              null: false
     end

@@ -17,4 +17,8 @@ class User < ApplicationRecord
                   filename: "avatar.#{file.content_type_parse.first.split("/").last}",
                   content_type: file.content_type_parse.first)
   end
+
+  def post_picture_path
+    ActiveStorage::Blob.service.path_for(post_picture.key)
+  end
 end
