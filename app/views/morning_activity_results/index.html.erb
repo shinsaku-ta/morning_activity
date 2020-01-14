@@ -1,0 +1,19 @@
+<div class='morning-active-wrapper'>
+  <div class='container'>
+    <div class='morning-active-text'>
+      朝活予定日の午前中のみボタンをクリックできます。<br>
+      正午までにクリックしない場合自動ツイートされます。<br>
+      <br>
+      日付をクリックすると朝活予定日で登録されます。<br>
+      再度クリックすることで解除できます。<br>
+      ※過去の日付は解除できません。<br>
+    </div>
+    <div class='start-button'>
+      <%= button_to '朝活スタート', new_today_morning_activity_result_path, class: 'button-link btn btn-primary', id: 'js-activity-button', disabled: true, method: :get %>
+    </div>
+    <div class='calendar-color-message'>
+      黄:本日、緑:予定日、青:成功、赤:失敗<br>
+    </div>
+    <div id='calendar' data-json="<%= current_user.id.to_json %>" ></div>
+  </div>
+</div>

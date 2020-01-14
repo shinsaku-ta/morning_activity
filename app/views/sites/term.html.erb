@@ -1,0 +1,20 @@
+<div class='top-wrapper'>
+  <div class='container'>
+    <div class='top-inner-text'>
+      <p class='terms-title'>
+        利用規約
+      </p>
+      <%= render 'terms_text' %>
+      <p class='terms-message'>
+      ※朝活を失敗した場合に自動ツイートがされてしまいます。
+      </p>
+      <div class='check-confirm'>
+        <%= check_box_tag :checkbox %>
+        <%= label_tag :checkbox, '利用規約に同意する' %>
+      </div>
+      <div class='next-button'>
+          <%= button_to '次へ', post_picture_path, id: 'next-button', disabled: true, method: :get, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>

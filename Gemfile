@@ -40,11 +40,17 @@ gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
 gem 'bootstrap', '~> 4.4.1'
 # Use jquery-rails for jquery
 gem 'jquery-rails'
+# Use fullcalendar-rails and momentjs-rails for calendar
+gem 'fullcalendar-rails'
+gem 'momentjs-rails'
 
 # Use sorcery for login
 gem 'sorcery'
 # Use config for const settings
 gem 'config'
+
+# Use whenever for batch
+gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -62,7 +68,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'whenever', require: false
   gem 'better_errors'
   gem 'binding_of_caller'
 end

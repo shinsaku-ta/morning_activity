@@ -1,0 +1,23 @@
+<%= form_with url: post_picture_path, method: :post, class: 'form-picture', local: true do |form| %>
+  <div class='picture-zone'>
+    <div>
+      自動ツイート用画像
+    </div>
+    <%# 画像登録の有無で表示する画像を切り替え%>
+    <% if current_user.post_picture.attached? %>
+      <%= image_tag current_user.post_picture, size: '400x250', id: 'js-picture-preview', class: 'picture-preview' %>
+    <% else %>
+      <%= image_tag 'picture.jpg', size: '400x250', id: 'js-picture-preview', class: 'picture-preview' %>
+    <% end %>
+  </div>
+  <div class='picture-setting-buttons'>
+    <label>
+      <span class="btn btn-primary">
+        画像選択
+        <%= form.file_field :post_picture, id: 'js-post-picture', class: 'post-picture' %>
+      </span>
+    </label>
+    <%= form.submit '登録', class: 'btn btn-primary', data: {'disable-with': '登録'} %>
+    <%= link_to 'デフォルト画像を登録', post_picture_path, method: :delete, class: 'btn btn-primary', data: { confirm: 'デフォルト画像が設定されてしまいます。よろしいでしょうか？' } %>
+  </div>
+<% end %>

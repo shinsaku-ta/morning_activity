@@ -1,5 +1,42 @@
 @import 'sites';
 @import 'header';
+@import 'morning_activity_results';
+@import 'post_pictures';
+@import 'today_morning_activity_results';
+@import 'accounts';
+@import 'calendar';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import 'bootstrap';
+@import 'fullcalendar';
+
+//全ページ共通スタイル
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  font-family: 'The Socialite Family';
+  text-align: center;
+}
+
+.page-headding {
+  padding: 20px 0;
+  @media screen and (max-width: 800px) {
+    font-size: 2rem;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 1rem;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+//フッターのスタイル
+footer {
+  margin-top: auto;
+}

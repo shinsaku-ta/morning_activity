@@ -1,0 +1,24 @@
+<div class='picture-wrapper'>
+  <div class='container'>
+    <h1 class='page-headding'>
+      寝顔画像を登録しましょう！
+    </h1>
+    <div class='page-body'>
+      <div class='picture-message'>
+        朝活失敗時、設定した画像が自動ツイートされます。<br>
+        サンプル画像のように寝顔を撮ってみましょう！<br>
+        また、マイページより画像の変更が可能です。<br>
+      </div>
+      <div>
+        サンプル画像
+      </div>
+      <ul class='pictures-example'>
+        <li class='picture-example'><%= image_tag 'picture.jpg', size: '200x200' %></li>
+        <li class='picture-example'><%= image_tag 'picture2.jpg', size: '200x200' %></li>
+        <li class='picture-example'><%= image_tag 'picture3.jpg', size: '200x200' %></li>
+        <li class='picture-example'><%= image_tag 'picture4.jpg', size: '200x200' %></li>
+      </ul>
+      <%= render 'shared/post_picture' %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+//今日ボタンが不要なため非表示
+.fc-today-button {
+  display : none;
+}
+
+//カレンダーの前・次ボタンを左に配置
+.fc-right {
+  float: left !important;
+}

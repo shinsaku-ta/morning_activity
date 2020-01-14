@@ -1,0 +1,21 @@
+<div class='account-wrapper'>
+  <div class='container'>
+    <h1 class='page-headding'>
+      マイページ設定
+    </h1>
+    <div class='page-body'>
+      <div class='mypage-content-frame'>
+        <div class='mypage-content-headding'>
+          自動ツイート画像設定
+        </div>
+        <%= render 'shared/post_picture' %>
+      </div>
+      <div class='mypage-content-frame'>
+        <div class='mypage-content-headding'>
+          アカウント削除
+        </div>
+        <%= link_to 'アカウントを削除', account_delete_confirm_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>
