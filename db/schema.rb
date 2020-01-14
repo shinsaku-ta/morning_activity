@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2019_12_24_072550) do
     t.string "provider", null: false
     t.string "uid", null: false
     t.string "access_token", null: false
+    t.string "access_token_secret", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid"

@@ -52,6 +52,12 @@ gem 'config'
 # Use whenever for batch
 gem 'whenever', require: false
 
+# Use twitter for tweet
+gem 'twitter', '~> 6.2'
+
+# Use aws for s3
+gem "aws-sdk-s3", require: false
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
