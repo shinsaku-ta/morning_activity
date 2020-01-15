@@ -4,7 +4,7 @@ lock "~> 3.11.2"
 set :application, "morning_activity"
 set :repo_url, "git@github.com:inasakunovel/morning_activity.git"
 set :user, 'shinsaku'
-set :deploy_to, "/var/www/aws-study-simple-app"
+set :deploy_to, "/var/www/morning_activity"
 set :linked_files, %w[config/master.key config/database.yml]
 set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets public/system vendor/bundle]
 set :rbenv_ruby, File.read('.ruby-version').strip
