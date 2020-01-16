@@ -8,7 +8,9 @@
 
       <li class='nav-item dropdown dropdown-slide header-profile'>
         <%= link_to '#', class: 'nav-link', id: 'header-profile', data: {toggle: 'dropdown'}, aria: {haspopup: true}, aria: {expanded: false} do %>
-        <%= image_tag current_user.avatar, class: 'rounded-circle mr15', size: '40' %>
+          <% if current_user.post_picture.attached? %>
+            <%= image_tag current_user.avatar, class: 'rounded-circle mr15', size: '40' %>
+          <% end %>
         <% end %>
         <div class='dropdown-menu dropdown-menu-right'>
           <div class='dropdown-item'><%= current_user.name %></div>
