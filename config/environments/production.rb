@@ -1,6 +1,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  host = 'samplehost'
+  Rails.application.routes.default_url_options[:host] = host
   # Code is not reloaded between requests.
   config.cache_classes = true
 
