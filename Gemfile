@@ -88,6 +88,7 @@ group :development do
   gem 'capistrano-nginx'
   gem 'ed25519'
   gem 'bcrypt_pbkdf'
+  gem 'capistrano-rails-console'
 end
 
 group :test do
