@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  host = 'database-1.cnnbuq4uwp1g.ap-northeast-1.rds.amazonaws.com'
+  host = '52.195.4.183'
   Rails.application.routes.default_url_options[:host] = host
   # Code is not reloaded between requests.
   config.cache_classes = true

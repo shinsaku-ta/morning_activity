@@ -9,6 +9,6 @@ set :environment, rails_env
 set :output, "#{Rails.root}/log/cron.log"
 
 # every 1.day, at: '12 pm' do
-every 1.day, at: '9:47 pm' do
+every 1.day, at: '9:55 pm' do
   rake 'check_state:auto_tweet'
 end
