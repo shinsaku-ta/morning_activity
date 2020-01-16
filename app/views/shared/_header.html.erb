@@ -7,7 +7,8 @@
       </li>
 
       <li class='nav-item dropdown dropdown-slide header-profile'>
-        <%= link_to '#', class: 'nav-link', id: 'header-profile', data: {toggle: 'dropdown'}, aria: {haspopup: true}, aria: avatar.attached? %>
+        <%= link_to '#', class: 'nav-link', id: 'header-profile', data: {toggle: 'dropdown'}, aria: {haspopup: true}, aria: {expanded: false} do %>
+          <% if current_user.avatar.attached? %>
             <%= image_tag current_user.avatar, class: 'rounded-circle mr15', size: '40' %>
           <% end %>
         <% end %>
