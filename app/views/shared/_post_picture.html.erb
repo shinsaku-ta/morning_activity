@@ -5,7 +5,7 @@
     </div>
     <%# 画像登録の有無で表示する画像を切り替え%>
     <% if current_user.post_picture.attached? %>
-      <%= image_tag current_user.post_picture, size: '400x250', id: 'js-picture-preview', class: 'picture-preview' %>
+      <%= image_tag current_user.post_picture_path, size: '400x250', id: 'js-picture-preview', class: 'picture-preview' %>
     <% else %>
       <%= image_tag 'picture.jpg', size: '400x250', id: 'js-picture-preview', class: 'picture-preview' %>
     <% end %>
