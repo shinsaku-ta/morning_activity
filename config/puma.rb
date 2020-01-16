@@ -16,8 +16,6 @@ threads threads_count, threads_count
 
 if ENV.fetch('RAILS_ENV') { 'development' } == 'development'
   ssl_bind '0.0.0.0', '3000', cert: 'config/certs/localhost.pem', key: 'config/certs/localhost-key.pem'
-# else ENV.fetch('RAILS_ENV') { 'production' } == 'production'
-#   ssl_bind '52.195.4.183', '3306', cert: '', cert: 'config/certs/localhost.pem', key: 'config/certs/localhost-key.pem'
 end
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together

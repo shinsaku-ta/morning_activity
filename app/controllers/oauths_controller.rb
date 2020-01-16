@@ -16,7 +16,7 @@ class OauthsController < ApplicationController
         @user = build_from(provider)
 
         @user.authentications.build(uid: @user_hash[:uid], provider: provider, access_token: @access_token.token, access_token_secret: @access_token.secret)
-        # @user.download_and_attach_avatar(@user_hash[:user_info]['profile_image_url_https'])
+        @user.download_and_attach_avatar(@user_hash[:user_info]['profile_image_url_https'])
         @user.save
 
         reset_session
