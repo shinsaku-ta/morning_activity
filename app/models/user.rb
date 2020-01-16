@@ -20,6 +20,6 @@ class User < ApplicationRecord
 
   def post_picture_path
     # ActiveStorage::Blob.service.path_for(post_picture.key)
-    Rails.application.routes.url_helpers.rails_blob_path(post_picture)
+    'http//52.195.4.183' + Rails.application.routes.url_helpers.rails_blob_path(post_picture)
   end
 end
