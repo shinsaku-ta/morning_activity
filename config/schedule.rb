@@ -8,7 +8,6 @@ set :environment, rails_env
 # cronのログの吐き出し場所。ここでエラー内容を確認する
 set :output, "#{Rails.root}/log/cron.log"
 
-# every 1.day, at: '12 pm' do
-every 1.day, at: '10:49 am' do
+every 1.day, at: '12 pm' do
   rake 'check_state:auto_tweet'
 end
